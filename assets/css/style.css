@@ -11,3 +11,8 @@ body {
   margin: 25px auto;
   border-radius: 10px;
 }
+
+.choice {
+  display: block;
+  margin: 5px auto;
+}
