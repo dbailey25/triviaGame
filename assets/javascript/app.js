@@ -8,8 +8,8 @@ $(document).ready(function(){
     },
     {
       question: 'In the movie "The Wizard of Oz", what did the Scarecrow want from the wizard?',
-      answer: 'A brain',
-      choices: ['A heart', 'A brain', 'Courage', 'A new hat']
+      answer: 'a brain',
+      choices: ['a heart', 'a brain', 'courage', 'a new hat']
     },
     {
       question: 'In what year was the original "Jurassic Park" film released?',
@@ -64,35 +64,6 @@ console.log('currentQuestion', currentQuestion);
   // pageload function calls
 
   // function declarations
-// var clearDiv = function() {
-//   $('#main').html($("<div>", {"id": "content"}));
-// };
-//
-//   var displayQuestion = function() {
-//     currentQuestion++,
-//     $('#content').append('<div>'+questionBank[currentQuestion].question+'</div>');
-//     for (var i = 0; i < questionBank[currentQuestion].choices.length; i++) {
-//       var button = $('<button>', {"type": "button", 'class': 'btn btn-light choice'}).text(questionBank[currentQuestion].choices[i]);
-//       $('#content').append(button)
-//     }
-//   };
-//
-//   var countdown = function() {
-//     time--;
-//     $("#countdown").text(time);
-//     console.log(time);
-//   };
-//
-//   var skip = function() {
-//     clearInterval(questionInterval);
-//     displayQuestion;
-//   };
-//
-//   var questionTimer = function() {
-//     $('#content').html($("<div>", {"id": "countdown"}).text(time));
-//     questionInterval = setInterval(countdown, 1000);
-//     setTimeout(skip, 1000 * 30);
-//   };
 
   function clearDiv() {
   $('#main').html($("<div>", {"id": "content"}));
@@ -116,13 +87,19 @@ console.log('currentQuestion', currentQuestion);
   function skip() {
     clearInterval(questionInterval);
     time = 30;
-    newQuestion()
+    displayInterQuestion();
+    setTimeout(newQuestion, 1000 * 5)
   };
 
   function questionTimer() {
     $('#content').html($("<div>", {"id": "countdown"}).text(time));
     questionInterval = setInterval(countdown, 1000);
-    setTimeout(skip, 1000 * 5)
+    setTimeout(skip, 1000 * 3)
+  };
+
+  var displayInterQuestion = function() {
+    clearDiv();
+    $('#content').html('<p>Did you fall asleep? The correct answer is '+questionBank[currentQuestion].answer+'.')
   };
 
 // type="button" class="btn btn-light"  clearDiv,
