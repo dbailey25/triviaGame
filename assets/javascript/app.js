@@ -50,8 +50,9 @@ $(document).ready(function(){
   ];
 
   var currentQuestion = -1;
-  var questionInterval;
-  var time = 30;
+  var questionCountdown;
+  // var questionTimer;
+  var time = 5;
   var newQuestion = function() {
     clearDiv()
     questionTimer()
@@ -80,26 +81,34 @@ console.log('currentQuestion', currentQuestion);
       var button = $('<button>', {"type": "button", 'class': 'btn btn-light choice', 'value': questionBank[currentQuestion].choices[i]}).text(questionBank[currentQuestion].choices[i]);
       $('#content').append(button);
     }
-    $(".choice").on("click", checkAnswer)
+    $(".choice").on("click", checkAnswer);
   };
 
   function countdown() {
     time--;
     $("#countdown").text(time);
-    console.log(time)
+    console.log(time);
+    if (time === 0) {
+      skip()
+    }
   };
 
+  function stopCountdown() {
+    clearInterval(questionCountdown);
+    time = 5
+  }
+
   function skip() {
-    clearInterval(questionInterval);
+    stopCountdown();
     result = skipped;
-    time = 30;
-    displayResult()
+    go()
   };
 
   function questionTimer() {
+    clearInterval(questionCountdown);
     $('#content').html($("<div>", {"id": "countdown"}).text(time));
-    questionInterval = setInterval(countdown, 1000);
-    setTimeout(skip, 1000 * 5)
+    questionCountdown = setInterval(countdown, 1000);
+    // questionTimer = setTimeout(skip, 1000 * 5)
   };
 
   var displayResult = function() {
@@ -114,11 +123,11 @@ console.log('currentQuestion', currentQuestion);
     else {
       $('#content').html(messsages[0] + questionBank[currentQuestion].answer + '.</p>')
     };
-    setTimeout(newQuestion, 1000 * 5)
+    setTimeout(go, 1000 * 5)
   };
 
   var checkAnswer = function() {
-    clearInterval(questionInterval);
+    stopCountdown();
     var userGuess = $(this).attr('value');
     var guessResult = (userGuess === questionBank[currentQuestion].answer);
     console.log('guessResult', guessResult);
@@ -133,15 +142,60 @@ console.log('currentQuestion', currentQuestion);
     console.log('checkAnswer result', result);
     console.log('correct', correct);
     console.log('incorrect', incorrect);
-    displayResult()
+    go()
 }
 
+  var go = function() {
+    if (correct + incorrect + skipped === questionBank.length) {
+      displayFinal()
+    }
+    else {
+      newQuestion()
+    }
+  };
+
+  function displayFinal() {
+    clearDiv();
+    $('#content').append("<p>You got " + correct + " answers correct.</p>");
+    $('#content').append("<p>You got " + incorrect + " answers incorrect.</p>");
+    $('#content').append("<p>You skipped " + skipped + " answers.</p>");
+    endMessage();
+    var restartBtn = $('<button>', {'id': 'restart', 'type': 'button', 'class': 'btn btn-warning'}).text('Play Again');
+    $('#content').append(restartBtn);
+    $("#restart").on("click", restart)
+  };
+
+  function endMessage() {
+    if (correct < 4) {
+      $('#content').append("<p>Maybe you don't watch many movies. That's okay click below to try again.</p>");
+    }
+    else if (correct >=4 && correct < 8) {
+      $('#content').append("<p>Pretty good. There's still some room for improvement, click below to try again.</p>");
+    }
+    else if (correct >=8 && correct < 10) {
+      $('#content').append("<p>Excellent!. There's still a little room for improvement, click below to try again.</p>");
+    }
+    else {
+      $('#content').append("<p>Amazing! You got them all correct. If you want to prove it wasn't a fluke, click below to try again.</p>");
+    }
+  }
+
+  var restart = function() {
+    currentQuestion = -1;
+    time = 5;
+    correct = 0;
+    incorrect = 0;
+    skipped = 0;
+    result = '';
+    newQuestion()
+  }
 // type="button" class="btn btn-light"  clearDiv,
 
     // when user clicks Action button
       // display a question
     $("#action").on("click", newQuestion);
-    $(".choice").on("click", checkAnswer);
+    // $(".choice").on("click", checkAnswer);
+    // $("#action").on("click", newQuestion);
   // var btnValue = $(".choice").attr('value');
   // console.log(btnValue);
         // clear content div
