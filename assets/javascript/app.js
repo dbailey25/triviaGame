@@ -100,6 +100,7 @@ console.log('currentQuestion', currentQuestion);
 
   function skip() {
     stopCountdown();
+    skipped++;
     result = skipped;
     go()
   };
@@ -167,7 +168,7 @@ console.log('currentQuestion', currentQuestion);
 
   function endMessage() {
     if (correct < 4) {
-      $('#content').append("<p>Maybe you don't watch many movies. That's okay click below to try again.</p>");
+      $('#content').append("<p>Maybe you don't watch many movies. That's okay, click below to try again.</p>");
     }
     else if (correct >=4 && correct < 8) {
       $('#content').append("<p>Pretty good. There's still some room for improvement, click below to try again.</p>");
