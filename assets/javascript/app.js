@@ -25,34 +25,38 @@ $(document).ready(function(){
       question: 'Which actress played Katniss Everdeen in "The Hunger Games"?',
       answer: 'Jennifer Lawrence',
       choices: ['Emma Watson', 'Hayden Panettiere', 'Margot Robbie', 'Jennifer Lawrence']
+    },
+    {
+      question: "The title role of the 1900's movie, &quot;Pretty Woman&quot;, was played by which actress?",
+      answer: 'Julia Roberts',
+      choices: ['Nicole Kidman', 'Julia Roberts', 'Michelle Pfieffer', 'Emma Thompson']
+    },
+    {
+      question: 'What was the name of the monkey in the Disney movie "Aladdin"?',
+      answer: 'Abu',
+      choices: ['Betsey', 'Caesar', 'George', 'Abu']
+    },
+    {
+      question: 'What fictional city is the home of Batman?',
+      answer: 'Gotham City',
+      choices: ['Metropolis', 'Gotham City', 'Arkham', 'Grand City']
+    },
+    {
+      question: 'What fictional planet is the superhero, "Superman", from?',
+      answer: 'Krypton',
+      choices: ['Krypton', 'Ork', 'Zandor', 'Pandora']
+    },
+    {
+      question: "What famous actor is known for the saying, &qout;I'll be back&quot;?",
+      answer: 'Arnold Schwarzenegger',
+      choices: ['Sylvester Stallone', 'Charles Bronson', 'Clint Eastwood', 'Arnold Schwarzenegger']
     }
-    // ,
-    // {
-    //   question: "The title role of the 1900's movie, &quot;Pretty Woman&quot;, was played by which actress?",
-    //   answer: 'Julia Roberts'
-    // },
-    // {
-    //   question: 'What is the name of the dog from "Wizard of Oz"?',
-    //   answer: 'Toto'
-    // },
-    // {
-    //   question: 'What fictional city is the home of Batman?',
-    //   answer: 'Gotham City'
-    // },
-    // {
-    //   question: 'What fictional planet is the superhero, "Superman", from?',
-    //   answer: 'Krypton'
-    // },
-    // {
-    //   question: "What famous actor is known for the saying, &qout;I'll be back&quot;?",
-    //   answer: 'Arnold Schwarzenegger'
-    // }
   ];
 
   var currentQuestion = -1;
   var questionCountdown;
   // var questionTimer;
-  var time = 5;
+  var time = 20;
   var newQuestion = function() {
     clearDiv()
     questionTimer()
@@ -95,7 +99,7 @@ console.log('currentQuestion', currentQuestion);
 
   function stopCountdown() {
     clearInterval(questionCountdown);
-    time = 5
+    time = 20
   }
 
   function skip() {
@@ -124,7 +128,7 @@ console.log('currentQuestion', currentQuestion);
     else {
       $('#content').html(messsages[0] + questionBank[currentQuestion].answer + '.</p>')
     };
-    setTimeout(go, 1000 * 5)
+    setTimeout(go, 1000 * 4)
   };
 
   var checkAnswer = function() {
@@ -183,7 +187,7 @@ console.log('currentQuestion', currentQuestion);
 
   var restart = function() {
     currentQuestion = -1;
-    time = 5;
+    time = 20;
     correct = 0;
     incorrect = 0;
     skipped = 0;
