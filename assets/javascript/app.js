@@ -57,9 +57,11 @@ $(document).ready(function(){
     questionTimer()
     displayQuestion()
   };
-  var correct;
-  var incorrect;
-  var skipped;
+  var messsages = ['<p>It looks like you missed that one. The correct answer is ', "<p>That's right. The correct answer is ", '<p>Not quite. The correct answer is '];
+  var result;
+  var correct = 0;
+  var incorrect = 0;
+  var skipped = 0;
 console.log('currentQuestion', currentQuestion);
   // pageload function calls
 
@@ -70,12 +72,15 @@ console.log('currentQuestion', currentQuestion);
 };
 
   function displayQuestion() {
-    currentQuestion++,
+    currentQuestion++;
+    var answer = questionBank[currentQuestion].answer;
+    console.log('answer:', answer);
     $('#content').append('<div>'+questionBank[currentQuestion].question+'</div>');
     for (var i = 0; i < questionBank[currentQuestion].choices.length; i++) {
-      var button = $('<button>', {"type": "button", 'class': 'btn btn-light choice'}).text(questionBank[currentQuestion].choices[i]);
-      $('#content').append(button)
+      var button = $('<button>', {"type": "button", 'class': 'btn btn-light choice', 'value': questionBank[currentQuestion].choices[i]}).text(questionBank[currentQuestion].choices[i]);
+      $('#content').append(button);
     }
+    $(".choice").on("click", checkAnswer)
   };
 
   function countdown() {
@@ -86,27 +91,59 @@ console.log('currentQuestion', currentQuestion);
 
   function skip() {
     clearInterval(questionInterval);
+    result = skipped;
     time = 30;
-    displayInterQuestion();
-    setTimeout(newQuestion, 1000 * 5)
+    displayResult()
   };
 
   function questionTimer() {
     $('#content').html($("<div>", {"id": "countdown"}).text(time));
     questionInterval = setInterval(countdown, 1000);
-    setTimeout(skip, 1000 * 3)
+    setTimeout(skip, 1000 * 5)
   };
 
-  var displayInterQuestion = function() {
+  var displayResult = function() {
     clearDiv();
-    $('#content').html('<p>Did you fall asleep? The correct answer is '+questionBank[currentQuestion].answer+'.')
+    console.log('displayResult result', result);
+    if (result === 'yes') {
+      $('#content').html(messsages[1] + questionBank[currentQuestion].answer + '.</p>')
+    }
+    else if (result === 'no') {
+      $('#content').html(messsages[2] + questionBank[currentQuestion].answer + '.</p>')
+    }
+    else {
+      $('#content').html(messsages[0] + questionBank[currentQuestion].answer + '.</p>')
+    };
+    setTimeout(newQuestion, 1000 * 5)
   };
+
+  var checkAnswer = function() {
+    clearInterval(questionInterval);
+    var userGuess = $(this).attr('value');
+    var guessResult = (userGuess === questionBank[currentQuestion].answer);
+    console.log('guessResult', guessResult);
+    if (guessResult) {
+      correct++;
+      result = 'yes'
+    }
+    else {
+      incorrect++;
+      result = 'no'
+    }
+    console.log('checkAnswer result', result);
+    console.log('correct', correct);
+    console.log('incorrect', incorrect);
+    displayResult()
+}
 
 // type="button" class="btn btn-light"  clearDiv,
 
     // when user clicks Action button
-    $("#action").on("click", newQuestion);
       // display a question
+    $("#action").on("click", newQuestion);
+    $(".choice").on("click", checkAnswer);
+  // var btnValue = $(".choice").attr('value');
+  // console.log(btnValue);
         // clear content div
         // display quest
         // display each choice in a button
