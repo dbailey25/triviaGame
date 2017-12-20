@@ -1,5 +1,14 @@
 body {
-  background-image: url('../images/movie_reel.jpg');
+  background-image: url('../images/movie_reel_sm.jpg');
+}
+
+h1 {
+  font-family: 'Limelight', 'Impact', cursive;
+}
+
+p {
+  font-family: 'Voces', 'Roboto' cursive;
+  font-size: 20px;
 }
 
 #playSpace {
@@ -7,12 +16,31 @@ body {
   width: 70vw;
   height: 600px;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   margin: 25px auto;
   border-radius: 10px;
+}
+
+#remaining {
+    display: inline-block;
+    margin: 0 3px 8px 0;
+}
+
+#countdown {
+  display: inline-block;
+}
+
+.text {
+  font-family: 'Voces', 'Roboto' cursive;
+  font-size: 20px;
 }
 
 .choice {
   display: block;
   margin: 5px auto;
 }
+
+@media screen and (min-width:775px) {
+  body {
+    background-image: url('../images/movie_reel.jpg');
+  }

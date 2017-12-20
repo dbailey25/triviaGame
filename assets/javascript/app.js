@@ -2,6 +2,11 @@ $(document).ready(function(){
   // variables
   var questionBank = [
     {
+      question: "The title role of the 1900's movie, &quot;Pretty Woman&quot;, was played by which actress?",
+      answer: 'Julia Roberts',
+      choices: ['Nicole Kidman', 'Julia Roberts', 'Michelle Pfieffer', 'Emma Thompson']
+    },
+    {
       question: 'BB-8 is an astromech droid from what film?',
       answer:'Star Wars',
       choices: ['Starship Troopers', 'Star Trek','Star Wars', 'Galaxy Quest']
@@ -27,11 +32,6 @@ $(document).ready(function(){
       choices: ['Emma Watson', 'Hayden Panettiere', 'Margot Robbie', 'Jennifer Lawrence']
     },
     {
-      question: "The title role of the 1900's movie, &quot;Pretty Woman&quot;, was played by which actress?",
-      answer: 'Julia Roberts',
-      choices: ['Nicole Kidman', 'Julia Roberts', 'Michelle Pfieffer', 'Emma Thompson']
-    },
-    {
       question: 'What was the name of the monkey in the Disney movie "Aladdin"?',
       answer: 'Abu',
       choices: ['Betsey', 'Caesar', 'George', 'Abu']
@@ -47,7 +47,7 @@ $(document).ready(function(){
       choices: ['Krypton', 'Ork', 'Zandor', 'Pandora']
     },
     {
-      question: "What famous actor is known for the saying, &qout;I'll be back&quot;?",
+      question: "What famous actor is known for the saying, &quot;I'll be back&quot;?",
       answer: 'Arnold Schwarzenegger',
       choices: ['Sylvester Stallone', 'Charles Bronson', 'Clint Eastwood', 'Arnold Schwarzenegger']
     }
@@ -73,14 +73,14 @@ console.log('currentQuestion', currentQuestion);
   // function declarations
 
   function clearDiv() {
-  $('#main').html($("<div>", {"id": "content"}));
+  $('#main').html($("<div>", {"id": "content", 'class': 'text'}));
 };
 
   function displayQuestion() {
     currentQuestion++;
     var answer = questionBank[currentQuestion].answer;
     console.log('answer:', answer);
-    $('#content').append('<div>'+questionBank[currentQuestion].question+'</div>');
+    $('#content').append('<div>' + questionBank[currentQuestion].question + '</div>');
     for (var i = 0; i < questionBank[currentQuestion].choices.length; i++) {
       var button = $('<button>', {"type": "button", 'class': 'btn btn-light choice', 'value': questionBank[currentQuestion].choices[i]}).text(questionBank[currentQuestion].choices[i]);
       $('#content').append(button);
@@ -111,7 +111,8 @@ console.log('currentQuestion', currentQuestion);
 
   function questionTimer() {
     clearInterval(questionCountdown);
-    $('#content').html($("<div>", {"id": "countdown"}).text(time));
+    $('#content').html($("<div>", {"id": "remaining", "class": "text"}).text('Time remaining:'));
+    $('#content').append($("<div>", {"id": "countdown", "class": "text"}).text(time));
     questionCountdown = setInterval(countdown, 1000);
     // questionTimer = setTimeout(skip, 1000 * 5)
   };
@@ -147,7 +148,7 @@ console.log('currentQuestion', currentQuestion);
     console.log('checkAnswer result', result);
     console.log('correct', correct);
     console.log('incorrect', incorrect);
-    go()
+    displayResult()
 }
 
   var go = function() {
