@@ -62,52 +62,46 @@ $(document).ready(function(){
       giphy: '<iframe src="https://giphy.com/embed/JDKxRN0Bvmm2c" frameBorder="0"></iframe>'
     }
   ];
-
   var currentQuestion = -1;
   var questionCountdown;
-  // var questionTimer;
   var time = 20;
-  var newQuestion = function() {
-    clearDiv()
-    questionTimer()
-    displayQuestion()
-  };
   var messsages = ['<p>It looks like you missed that one. The correct answer is ', "<p>That's right. The correct answer is ", '<p>Not quite. The correct answer is '];
   var result;
   var correct = 0;
   var incorrect = 0;
   var skipped = 0;
-console.log('currentQuestion', currentQuestion);
-  // pageload function calls
-
-// function giphy() {
-//   $('#playSpace').html('<iframe src="https://giphy.com/embed/26FLi7OMWrsjdKh9e" width="480" height="297" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>')
-// }
-//
-// giphy()
 
   // function declarations
+  var newQuestion = function() {
+    clearDiv()
+    questionTimer()
+    displayQuestion()
+  };
 
+  // clear the main div
   function clearDiv() {
-  $('#main').html($("<div>", {"id": "content", 'class': 'text'}));
-};
+  $('#main').empty();
+  };
+
 
   function displayQuestion() {
+    // display a question
     currentQuestion++;
     var answer = questionBank[currentQuestion].answer;
-    console.log('answer:', answer);
-    $('#content').append('<div>' + questionBank[currentQuestion].question + '</div>');
+    $('#main').append('<div>' + questionBank[currentQuestion].question + '</div>');
+    // display each choice in a button
     for (var i = 0; i < questionBank[currentQuestion].choices.length; i++) {
       var button = $('<button>', {"type": "button", 'class': 'btn btn-light choice', 'value': questionBank[currentQuestion].choices[i]}).text(questionBank[currentQuestion].choices[i]);
-      $('#content').append(button);
+      $('#main').append(button);
     }
+    // when user clicks a choice button check their answer
     $(".choice").on("click", checkAnswer);
   };
 
   function countdown() {
     time--;
     $("#countdown").text(time);
-    console.log(time);
+    // if user doesn't click a choice button within allotted time record as skipped and display message
     if (time === 0) {
       skip()
     }
@@ -122,38 +116,42 @@ console.log('currentQuestion', currentQuestion);
     stopCountdown();
     skipped++;
     result = skipped;
-    go()
+    displayResult()
   };
 
   function questionTimer() {
     clearInterval(questionCountdown);
-    $('#content').html($("<div>", {"id": "remaining", "class": "text"}).text('Time remaining:'));
-    $('#content').append($("<div>", {"id": "countdown", "class": "text"}).text(time));
+    // start timer
+    $('#main').html($("<div>", {"id": "remaining", "class": "text"}).text('Time remaining:'));
+    // display time remaining
+    $('#main').append($("<div>", {"id": "countdown", "class": "text"}).text(time));
     questionCountdown = setInterval(countdown, 1000);
-    // questionTimer = setTimeout(skip, 1000 * 5)
   };
 
   var displayResult = function() {
     clearDiv();
-    console.log('displayResult result', result);
+    // display corret answer and appropriate message
     if (result === 'yes') {
-      $('#content').html(messsages[1] + questionBank[currentQuestion].answer + '.</p>')
+      $('#main').html(messsages[1] + questionBank[currentQuestion].answer + '.</p>')
     }
     else if (result === 'no') {
-      $('#content').html(messsages[2] + questionBank[currentQuestion].answer + '.</p>')
+      $('#main').html(messsages[2] + questionBank[currentQuestion].answer + '.</p>')
     }
     else {
-      $('#content').html(messsages[0] + questionBank[currentQuestion].answer + '.</p>')
+      $('#main').html(messsages[0] + questionBank[currentQuestion].answer + '.</p>')
     };
-    $('#content').append(questionBank[currentQuestion].giphy);
+    $('#main').append(questionBank[currentQuestion].giphy);
+    // after a waiting period automatically display a new question or final results
     setTimeout(go, 1000 * 5)
   };
 
   var checkAnswer = function() {
+    // stop timer
     stopCountdown();
+    // compare user selection with correct answer
     var userGuess = $(this).attr('value');
     var guessResult = (userGuess === questionBank[currentQuestion].answer);
-    console.log('guessResult', guessResult);
+    // record outcome in appropriate results variables
     if (guessResult) {
       correct++;
       result = 'yes'
@@ -162,13 +160,11 @@ console.log('currentQuestion', currentQuestion);
       incorrect++;
       result = 'no'
     }
-    console.log('checkAnswer result', result);
-    console.log('correct', correct);
-    console.log('incorrect', incorrect);
     displayResult()
-}
+  }
 
   var go = function() {
+    // after all questions are completed, display final results
     if (correct + incorrect + skipped === questionBank.length) {
       displayFinal()
     }
@@ -179,70 +175,48 @@ console.log('currentQuestion', currentQuestion);
 
   function displayFinal() {
     clearDiv();
-    $('#content').append("<p>You got " + correct + " answers correct.</p>");
-    $('#content').append("<p>You got " + incorrect + " answers incorrect.</p>");
-    $('#content').append("<p>You skipped " + skipped + " answers.</p>");
+    // display result totals
+    $('#main').append("<p>You got " + correct + " answers correct.</p>");
+    $('#main').append("<p>You got " + incorrect + " answers incorrect.</p>");
+    $('#main').append("<p>You skipped " + skipped + " answers.</p>");
+    // display appropriate conclusion message
     endMessage();
+    // display Play Again button
     var restartBtn = $('<button>', {'id': 'restart', 'type': 'button', 'class': 'btn btn-warning'}).text('Play Again');
-    $('#content').append(restartBtn);
+    $('#main').append(restartBtn);
+    // if user clicks Play Again, clear results variables and display first question
     $("#restart").on("click", restart)
   };
 
   function endMessage() {
+    // select appropriate message based on number of correct answers
     if (correct < 4) {
-      $('#content').append("<p>Maybe you don't watch many movies. That's okay, click below to try again.</p>");
+      $('#main').append("<p>Maybe you don't watch many movies. That's okay, click below to try again.</p>");
     }
     else if (correct >=4 && correct < 8) {
-      $('#content').append("<p>Pretty good. There's still some room for improvement, click below to try again.</p>");
+      $('#main').append("<p>Pretty good. There's still some room for improvement, click below to try again.</p>");
     }
     else if (correct >=8 && correct < 10) {
-      $('#content').append("<p>Excellent!. There's still a little room for improvement, click below to try again.</p>");
+      $('#main').append("<p>Excellent!. There's still a little room for improvement, click below to try again.</p>");
     }
     else {
-      $('#content').append("<p>Amazing! You got them all correct. If you want to prove it wasn't a fluke, click below to try again.</p>");
+      $('#main').append("<p>Amazing! You got them all correct. If you want to prove it wasn't a fluke, click below to try again.</p>");
     }
   }
 
   var restart = function() {
+    // reset variables
     currentQuestion = -1;
     time = 20;
     correct = 0;
     incorrect = 0;
     skipped = 0;
     result = '';
+    // display the first question
     newQuestion()
   }
-// type="button" class="btn btn-light"  clearDiv,
 
-    // when user clicks Action button
-      // display a question
+    // when user clicks the Action button display the first question
     $("#action").on("click", newQuestion);
-    // $(".choice").on("click", checkAnswer);
-    // $("#action").on("click", newQuestion);
-  // var btnValue = $(".choice").attr('value');
-  // console.log(btnValue);
-        // clear content div
-        // display quest
-        // display each choice in a button
-      // start timer
-      // display time remaining
-    // when user clicks a choice button
-      // stop timer
-      // check answer
-        // compare user selection with correct answer
-        // record outcome in appropriate results var
-        // display corret answer and appropriate message
-      // after a waiting period automatically display a new question
-    // if user doesn't click a choice button within allotted time
-      // display appropriate notification
-      // after a waiting period automatically display a new question
-    // after all questions are completed, display final results
-      // clear main div
-      // display results
-      // display appropriate conclusion message
-      // display Play Again button
-    // if user clicks Play Again
-      // clear results variables
-      // display first question
 
 });
