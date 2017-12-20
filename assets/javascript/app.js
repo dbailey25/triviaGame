@@ -4,52 +4,62 @@ $(document).ready(function(){
     {
       question: "The title role of the 1900's movie, &quot;Pretty Woman&quot;, was played by which actress?",
       answer: 'Julia Roberts',
-      choices: ['Nicole Kidman', 'Julia Roberts', 'Michelle Pfieffer', 'Emma Thompson']
+      choices: ['Nicole Kidman', 'Julia Roberts', 'Michelle Pfieffer', 'Emma Thompson'],
+      giphy: '<iframe src="https://giphy.com/embed/UhZOXSgWpcTxS" frameBorder="0"></iframe>'
     },
     {
       question: 'BB-8 is an astromech droid from what film?',
       answer:'Star Wars',
-      choices: ['Starship Troopers', 'Star Trek','Star Wars', 'Galaxy Quest']
+      choices: ['Starship Troopers', 'Star Trek','Star Wars', 'Galaxy Quest'],
+      giphy: '<iframe src="https://giphy.com/embed/l4KhSqMmxJtCTP6Fy" frameBorder="0"></iframe>'
     },
     {
       question: 'In the movie "The Wizard of Oz", what did the Scarecrow want from the wizard?',
       answer: 'a brain',
-      choices: ['a heart', 'a brain', 'courage', 'a new hat']
+      choices: ['a heart', 'a brain', 'courage', 'a new hat'],
+      giphy: '<iframe src="https://giphy.com/embed/HqziRCuz34Tks" frameBorder="0"></iframe>'
     },
     {
       question: 'In what year was the original "Jurassic Park" film released?',
       answer: '1993',
-      choices: ['1983', '1988', '1993', '1998']
+      choices: ['1983', '1988', '1993', '1998'],
+      giphy: '<iframe src="https://giphy.com/embed/3oEjI7REP1DB4KHJDi" frameBorder="0"></iframe>'
     },
     {
       question: 'Who does the voice over for Dory from "Finding Nemo" and "Finding Dory"?',
       answer: 'Ellen Degeneres',
-      choices: ['Ellen Degeneres', 'Mila Kunis', 'Drew Barrymore', 'Kate Hudson']
+      choices: ['Ellen Degeneres', 'Mila Kunis', 'Drew Barrymore', 'Kate Hudson'],
+      giphy: '<iframe src="https://giphy.com/embed/l46CdoZqbJxQMOvjW" frameBorder="0"></iframe>'
     },
     {
       question: 'Which actress played Katniss Everdeen in "The Hunger Games"?',
       answer: 'Jennifer Lawrence',
-      choices: ['Emma Watson', 'Hayden Panettiere', 'Margot Robbie', 'Jennifer Lawrence']
+      choices: ['Emma Watson', 'Hayden Panettiere', 'Margot Robbie', 'Jennifer Lawrence'],
+      giphy: '<iframe src="https://giphy.com/embed/phlEbeymvCd1e" frameBorder="0"></iframe>'
     },
     {
       question: 'What was the name of the monkey in the Disney movie "Aladdin"?',
       answer: 'Abu',
-      choices: ['Betsey', 'Caesar', 'George', 'Abu']
+      choices: ['Betsey', 'Caesar', 'George', 'Abu'],
+      giphy: '<iframe src="https://giphy.com/embed/4sq3FxAcRmU24" frameBorder="0"></iframe>'
     },
     {
       question: 'What fictional city is the home of Batman?',
       answer: 'Gotham City',
-      choices: ['Metropolis', 'Gotham City', 'Arkham', 'Grand City']
+      choices: ['Metropolis', 'Gotham City', 'Arkham', 'Grand City'],
+      giphy: '<iframe src="https://giphy.com/embed/pt6k2y43NJ2fe" frameBorder="0"></iframe>'
     },
     {
       question: 'What fictional planet is the superhero, "Superman", from?',
       answer: 'Krypton',
-      choices: ['Krypton', 'Ork', 'Zandor', 'Pandora']
+      choices: ['Krypton', 'Ork', 'Zandor', 'Pandora'],
+      giphy: '<iframe src="https://giphy.com/embed/cbnLaovyd6OJO" frameBorder="0"></iframe>'
     },
     {
       question: "What famous actor is known for the saying, &quot;I'll be back&quot;?",
       answer: 'Arnold Schwarzenegger',
-      choices: ['Sylvester Stallone', 'Charles Bronson', 'Clint Eastwood', 'Arnold Schwarzenegger']
+      choices: ['Sylvester Stallone', 'Charles Bronson', 'Clint Eastwood', 'Arnold Schwarzenegger'],
+      giphy: '<iframe src="https://giphy.com/embed/JDKxRN0Bvmm2c" frameBorder="0"></iframe>'
     }
   ];
 
@@ -69,6 +79,12 @@ $(document).ready(function(){
   var skipped = 0;
 console.log('currentQuestion', currentQuestion);
   // pageload function calls
+
+// function giphy() {
+//   $('#playSpace').html('<iframe src="https://giphy.com/embed/26FLi7OMWrsjdKh9e" width="480" height="297" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>')
+// }
+//
+// giphy()
 
   // function declarations
 
@@ -129,7 +145,8 @@ console.log('currentQuestion', currentQuestion);
     else {
       $('#content').html(messsages[0] + questionBank[currentQuestion].answer + '.</p>')
     };
-    setTimeout(go, 1000 * 4)
+    $('#content').append(questionBank[currentQuestion].giphy);
+    setTimeout(go, 1000 * 5)
   };
 
   var checkAnswer = function() {
