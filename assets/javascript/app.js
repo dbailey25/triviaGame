@@ -2,7 +2,7 @@ $(document).ready(function(){
   // variables
   var questionBank = [
     {
-      question: "The title role of the 1900's movie, &quot;Pretty Woman&quot;, was played by which actress?",
+      question: "The title role of the 1990's movie, &quot;Pretty Woman&quot;, was played by which actress?",
       answer: 'Julia Roberts',
       choices: ['Nicole Kidman', 'Julia Roberts', 'Michelle Pfieffer', 'Emma Thompson'],
       giphy: '<iframe src="https://giphy.com/embed/UhZOXSgWpcTxS" frameBorder="0"></iframe>'
@@ -178,7 +178,7 @@ $(document).ready(function(){
     // display result totals
     $('#main').append("<p>You got " + correct + " answers correct.</p>");
     $('#main').append("<p>You got " + incorrect + " answers incorrect.</p>");
-    $('#main').append("<p>You skipped " + skipped + " answers.</p>");
+    $('#main').append("<p>You skipped " + skipped + " questions.</p>");
     // display appropriate conclusion message
     endMessage();
     // display Play Again button
@@ -216,7 +216,7 @@ $(document).ready(function(){
     newQuestion()
   }
 
-    // when user clicks the Action button display the first question
+    // when the user clicks the Action button, display the first question
     $("#action").on("click", newQuestion);
 
 });
